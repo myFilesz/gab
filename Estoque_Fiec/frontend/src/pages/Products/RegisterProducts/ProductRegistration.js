@@ -14,6 +14,7 @@ import "./style.css";
 
 import Upload from "../../../hooks/upload/Upload";
 import FileList from "../../../hooks/FileList/index";
+import NavBar from '../../../hooks/NavBar/NavBar';
 
 
 import { Container, Content } from "./styles";
@@ -54,7 +55,7 @@ export default class ProductRegistration extends Component {
     id_fabricante: "",
 
     unidade_medida: [],
-    unit: "unidade de medida",
+    unit: "un de medida",
     id_unit: "",
 
     nome_produto: "",
@@ -231,6 +232,7 @@ export default class ProductRegistration extends Component {
 
     return (
       <div>
+        <NavBar />
         <ContainerMain>
           <ContainerForm>
             <ContainerFormUp>
@@ -252,6 +254,7 @@ export default class ProductRegistration extends Component {
                 </DivInputFlout>
                 <ContainerQtde>
                   <input
+                    style={{width : '275px'}}
                     row="3"
                     type="number"
                     step="1.00"
@@ -265,18 +268,16 @@ export default class ProductRegistration extends Component {
 
                   <DropDownQtde>
                   {/* DropDown unidade de Medida*/}
-                  <Dropdown>
+                  <Dropdown style={{width : '128px'}}>
                     <Dropdown.Toggle
                       variant="info"
                       className="dropDown"
                       id="fabricante"
+                      style={{width: '100%'}}
                     >
                       {this.state.unit}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <label>Unidade de Medida</label>
-                      </Dropdown.Item>
                       {unidade_medida &&
                         unidade_medida.map(unit => (
                           <Dropdown.Item
@@ -535,7 +536,7 @@ export default class ProductRegistration extends Component {
 
             <ContainerDropDown>
               {/* DropDown Fabricante*/}
-              <Dropdown>
+              <Dropdown >
                 <Dropdown.Toggle
                   variant="info"
                   className="dropDown"

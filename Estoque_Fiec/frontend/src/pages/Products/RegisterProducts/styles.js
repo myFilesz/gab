@@ -77,6 +77,8 @@ export const DivInputFlout = styled.div`
     margin-top: 7px;
     color: #3951b2;
   }
+
+ 
 `;
 
 export const ContainerMain = styled.div`
@@ -145,6 +147,7 @@ export const ConatinerFormDownRight = styled.div`
   justify-content: center;
   text-align: center;
   background-color: #f8f8f8;
+  margin-top: 55px;
 `;
 
 export const Card = styled.div`
@@ -235,7 +238,7 @@ export const ContainerQtde = styled.div`
   label {
     pointer-events: none;
     position: absolute;
-    top: 0px;
+    top: 50px;
     left: 40px;
     margin-top: 135px;
     font-size: 16px;
@@ -259,6 +262,19 @@ export const ContainerQtde = styled.div`
     font-size: 13px;
     margin-top: 113px;
     color: #3951b2;
+  }
+
+  @media (max-width:1669px){
+    label{
+       margin-top: 118px;
+       left:30px;  
+    }
+
+    input:not(:placeholder-shown) + label {
+    font-size: 13px;
+    margin-top: 90px;
+    color: #3951b2;
+  }
   }
 `
 export const DropDownQtde = styled.div`

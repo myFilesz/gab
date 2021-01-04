@@ -1,9 +1,12 @@
 import React from 'react';
 
-function Home(props){
+import NavBar from '../../hooks/NavBar/NavBar';
+
+function Home(){
 
     return(
         <div>
+            <NavBar />
             <h1>Hello Word</h1>
         </div>
     )

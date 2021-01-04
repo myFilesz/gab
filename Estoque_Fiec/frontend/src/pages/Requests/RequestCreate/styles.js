@@ -6,6 +6,7 @@ export const Container = styled.div`
     border: solid 3px black;
     display: flex;
     justify-content: space-around;
+    margin-top: 20px;
 `
 
 export const AlignItensColum = styled.div`
