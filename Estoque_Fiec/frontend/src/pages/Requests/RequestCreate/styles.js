@@ -1,18 +1,18 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+    display: inline-flex;
+    justify-content: center;
     width: 100vw;
     height: 50vh;
-    border: solid 3px black;
-    display: flex;
-    justify-content: space-around;
     margin-top: 20px;
+    padding:30px;
 `
 
+
 export const AlignItensColum = styled.div`
-    width: 30%;
+    width: 25%;
     height: 100%;
-    border: solid 3px black;
     background: #fff;
     display: flex;
     flex-direction: column;
