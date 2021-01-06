@@ -35,7 +35,8 @@ export const DivInputFlout = styled.div`
     border-bottom: 2px solid lightgrey;
     background-color: #f5fffa;
     outline: none;
-    width: 25em;
+    width: 100%;
+    min-width: 200px;
     height: 40px;
     margin-top: 3px;
     margin-left: 5px;

@@ -2,19 +2,14 @@ import React, { useState, useEffect } from "react";
 import api from "../../../api";
 
 export default function ProductsTable(props) {
-    const [products, setProducts] = useState(props);
-    const [productsList, setProductsList] = useState([]);
-    console.log(props);
-  
-    useEffect((props) => {
-        if(props == null || products == undefined) setProducts(['']);
-        
-        else setProductsList(products+props);
-
-    }, [products])
-
+    const newList = props.props
+    const [productsList, setProductsList] = useState([newList]);
+    useEffect(() => {
+      setProductsList(newList)
+    }, [newList])
     
   return (
+    <div>
     <table>
       <thead>
         <tr>
@@ -25,15 +20,17 @@ export default function ProductsTable(props) {
         </tr>
       </thead>
       <tbody>
-        {!products && products.map(p => (
-            <tr>
-              <td> </td>
-              <td> </td>
-              <td> </td>
-              <td> </td>
+        {productsList && productsList.map(p =>(
+
+            <tr >
+              <td>{p.nome}</td>
+              <td>-</td>
+              <td>{p.qtde}</td>
+              <td>{p.unitPrice}</td>
             </tr>
-          ))}
+        ))}
       </tbody>
     </table>
+    </div>
   );
 }
