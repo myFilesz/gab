@@ -3,7 +3,11 @@ import {
   Container,
   AlignItensColum,
   DivInputFlout,
-  AlignItensInline
+  AlignItensInline,
+  Label,
+  WrapLabel,
+  LabelProduct,
+  Button
 } from "./styles";
 import { Dropdown } from "react-bootstrap";
 
@@ -18,12 +22,12 @@ export default function RequestCreate() {
 
   let [product, setProduct] = useState("");
   const [products, setProducts] = useState("");
-  const [name_product, setName_product] = useState("");
+  const [name_product, setName_product] = useState("PRODUTO");
   let [productsList, setProductsList] = useState("");
 
   let [props, setProps] = useState([]);
   const [approver, setApprover] = useState("");
-  const [id_Approver, setId_Approver] = useState("");
+  const [id_Approver, setId_Approver] = useState("1");
 
   const [requester, setRequester] = useState("");
   const [id_req, setId_req] = useState("1");
@@ -39,20 +43,32 @@ export default function RequestCreate() {
     });
   }, []);
 
+  useEffect(() => {
+    if (qtde <= -1) {
+      setQtde(0);
+    }
+  }, [qtde]);
 
-  useEffect(()=>{
-    console.log(productsList)
-    setProps(productsList)
-  },[productsList])
+  useEffect(() => {
+    if (unitPrice <= -1) {
+      setUnitPrice(0);
+    }
+  }, [unitPrice]);
 
-  function handleAddItem(event){
-    event.preventDefault()
-    console.log("funfo")
-    // const aux = {qtde,unitPrice};
-    setProduct({product,qtde,unitPrice})
-
-    setProductsList(productsList =>[...productsList, product])
+  function handleAddItem(event) {
+    event.preventDefault();
+    const newItem = {
+      id: product.id,
+      name: product.nome,
+      qtde: qtde,
+      unitPrice: unitPrice
+    };
+    setProductsList(productsList => [...productsList, newItem]);
   }
+
+  useEffect(() => {
+    setProps(productsList);
+  }, [productsList]);
 
   return (
     <div>
@@ -69,7 +85,7 @@ export default function RequestCreate() {
               value={requestNumber}
               placeholder="Numero do Pedido"
             />
-            <label>Numero do Pedido</label>
+            <Label>Numero do Pedido</Label>
           </DivInputFlout>
           <input
             type="date"
@@ -80,7 +96,8 @@ export default function RequestCreate() {
         <AlignItensColum>
           <AlignItensInline>
             {/* DropDown requester*/}
-            <label>Requisitante</label>
+            <WrapLabel>
+            <Label>Requisitante</Label>
             <Dropdown>
               <Dropdown.Toggle className="dropDown" id="requester">
                 {id_req}
@@ -100,19 +117,21 @@ export default function RequestCreate() {
                   ))}
               </Dropdown.Menu>
             </Dropdown>
+            </WrapLabel>
             {/* end of DropDown requester*/}
           </AlignItensInline>
 
           <AlignItensInline>
             {/* DropDown Approver*/}
-            <label>Aprovador</label>
-            <Dropdown>
+            <WrapLabel>
+            <Label>Aprovador</Label>
+            <Dropdown style={{marginRight: '-5px'}}>
               <Dropdown.Toggle
                 className="dropDown"
                 id="requester"
-                style={{ width: "100px" }}
+                
               >
-                {approver}
+                {id_Approver}
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 {approver &&
@@ -129,17 +148,18 @@ export default function RequestCreate() {
                   ))}
               </Dropdown.Menu>
             </Dropdown>
+            </WrapLabel>
             {/* end of DropDown Approver*/}
           </AlignItensInline>
 
           <AlignItensInline>
             {/* Dropdown Reason */}
-            <label>Motivo:</label>
-            <Dropdown>
+            <WrapLabel>
+            <Label>Motivo</Label>
+            <Dropdown style={{marginRight: '-15px'}}>
               <Dropdown.Toggle
                 className="dropdown"
                 id="reason"
-                style={{ width: "100px" }}
               >
                 {id_req}
               </Dropdown.Toggle>
@@ -158,27 +178,30 @@ export default function RequestCreate() {
                   ))}
               </Dropdown.Menu>
             </Dropdown>
+            </WrapLabel>
             {/* end of dropDown Reason */}
           </AlignItensInline>
         </AlignItensColum>
         <AlignItensColum>
           <AlignItensInline>
-            <Dropdown>
-              <Dropdown.Toggle className="dropdown" style={{ width: "100px" }}>
-                {product.nome}
+            <WrapLabel>
+              <LabelProduct value={name_product}/>
+              <Dropdown>
+                <Dropdown.Toggle className="dropdown"></Dropdown.Toggle>
                 <Dropdown.Menu>
                   {products &&
                     products.map(p => (
                       <Dropdown.Item
                         key={p.id}
                         onClick={() => setProduct(p)}
+                        onMouseEnter={() => setName_product(p.nome)}
                       >
                         {p.nome}
                       </Dropdown.Item>
                     ))}
                 </Dropdown.Menu>
-              </Dropdown.Toggle>
-            </Dropdown>
+              </Dropdown>
+            </WrapLabel>
           </AlignItensInline>
           <AlignItensInline>
             <DivInputFlout>
@@ -203,12 +226,9 @@ export default function RequestCreate() {
             </DivInputFlout>
           </AlignItensInline>
           <AlignItensInline>
-            <button
-              type="submit"
-              onClick={handleAddItem}
-            >
+            <Button type="submit" onClick={handleAddItem}>
               Adicionar
-            </button>
+            </Button>
           </AlignItensInline>
         </AlignItensColum>
       </Container>
