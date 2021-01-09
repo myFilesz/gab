@@ -5,7 +5,7 @@ const banco = 'progressao'
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: '1234',
     port : 3306,
     database: banco,
     multipleStatements: true

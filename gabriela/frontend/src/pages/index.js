@@ -5,78 +5,97 @@ import Upload from "../Upload/index";
 export default function Home() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [file, setFile] = useState([]);
-  const [url, setUrl] = useState("");
-  const [upload, setUpload] = useState(false);
+  const [url, setUrl] = useState("#");
   const [visible, setVisible] = useState("none");
-  const [link, setLink] = useState("#");
-  const [img, setImg] = useState('');
+
 
   useEffect(() => {
-    setVisible("block");
-  }, [upload]);
+    setVisible('block');
+  }, [url]);
 
   function submitForm(e) {
     e.preventDefault();
-    console.log(e.target.name.value);
+
     const data = {
-      name: e.target.name,
-      email: e.target.email
+      name: name,
+      email: email,
+      url: url
     };
     const response = api.post("/users/registro", { data });
-
-    api.post("/users/uploadimg", { file }).then(response =>{
-        console.log(response)
-        setUpload(true);
-    }).catch(
-        (err) => console.log(err)
-    )
   }
+
+  function handleUpload(files) {
+    console.log(files)
+    const uploadeFile = files.map(file => ({
+      file,
+      name: file.name,
+      uploaded: false,
+      error: false,
+      url: null
+    }));
+
+    console.log(uploadeFile);
+
+    uploadeFile.forEach(processUpload);
+  };
+
+  function processUpload(uploadeFile) {
+    const data = new FormData();
+
+    data.append("file", uploadeFile.file, uploadeFile.name);
+
+    api.post("/users/uploadImg", data)
+      .then(response => {
+
+        setUrl(response.data.url);
+        console.log(url)
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  };
 
   return (
     <div>
-    <Upload onUpload={this.handleUpload} />
-      <form onSubmit={submitForm} >
-        <div
-          style={{
-            width: "300px",
-            height: "300px"
-          }}
-        >
-        <img src={file} />
-        </div>
-        <label>Nome</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={name}
-          onChange={e => setName(e.target.value)}
-        />
+        <center>
 
-        <label>Email</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
+      <div className="card" style={{ width: '18rem' }}>
+        <Upload onUpload={handleUpload} />
+        <img src={url} style={{
+          width: "100%",
+          height: "200px"
+        }} />
+        <form>
+          <div className="card-body">
+            <h5 className="card-title"><label>Nome</label></h5>
+            <p className="card-text">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={name}
+                onChange={e => setName(e.target.value)}
+              /></p>
+            <h5 className="card-title"><label>Email</label></h5>
+            <p className="card-text">
+              <input
+                type="text"
+                id="email"
+                name="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+              />
+            </p>
+            <button onClick={submitForm} type="submit">Enviar</button>
+          </div>
+        </form>
+      </div>
+      </center>
 
-        <button type="submit">Enviar</button>
-        <h1>
-          Clique{" "}
-          <a
-            href={link}
-            style={{
-              display: visible
-            }}
-          >
-            aqui
-          </a>
-          para ver a imagem
-        </h1>
-      </form>
+      <h1>
+        <a href={url} style={{ display: visible }} >Clique aqui para ver a imagem</a>
+      </h1>
+      clique <a href="http://localhost:3000/listar">Aqui</a> para ver todos os usuarios
     </div>
   );
 }

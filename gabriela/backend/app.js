@@ -23,7 +23,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/images/products', express.static(path.resolve(__dirname,'uploads', 'images')));
+app.use('/images', express.static(path.resolve(__dirname,'uploads', 'images')));
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -23,18 +23,19 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get("/registro", usersController.registro());
+router.post("/registro", usersController.registro());
 
-router.post('/uploadimg', multer(multerConfig).single('file'), (req,res)=>{
-  const name = req.file.originalname;
+router.post('/uploadImg', multer(multerConfig).single('file'), (req,res)=>{
+  const { originalname: name } = req.file;
 
   const data ={
-      url: `http://localhost:38001/images/products/fiec-${name}`
+      name :name,
+      url: `http://localhost:38001/images/${name}`
   }
   console.log(data.url);
   return res.json(data);
 })
 
-// router.post("/listar", usersController.listar());
+router.get("/listar", usersController.listar());
 
 module.exports = router;

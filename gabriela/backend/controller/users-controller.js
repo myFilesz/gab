@@ -11,6 +11,17 @@ class usersController {
       });
     };
   }
+
+  listar(){
+    return function(req,res){
+        users.listar().then( (response)=>{
+            return res.json(response);
+        }).catch( (err)=>{
+            console.log(`[ ERRO ]: ${err}`)
+        })
+    }
+
+}//fim selectAll
 }
 
 module.exports = usersController;
